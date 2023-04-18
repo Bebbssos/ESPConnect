@@ -42,6 +42,7 @@ void ESPConnectClass::load_sta_credentials(){
 bool ESPConnectClass::start_portal(){
   bool configured = false;
   ESPCONNECT_SERIAL("Starting Captive Portal\n");
+  WiFi.config(IPAddress(0, 0, 0, 0), IPAddress(0, 0, 0, 0), IPAddress(0, 0, 0, 0));
   // Try Connecting Station
   WiFi.mode(WIFI_AP_STA);
   // Start Access Point
@@ -212,7 +213,12 @@ bool ESPConnectClass::begin(AsyncWebServer* server, unsigned long timeout){
     ESPCONNECT_SERIAL("SSID: "+_sta_ssid+"\n");
     ESPCONNECT_SERIAL("Password: "+_sta_password+"\n\n");
     ESPCONNECT_SERIAL("Connecting to STA [");
-    
+
+    // Configure static IP or use DHCP based on _useStaticIP flag
+    if (_useStaticIP) {
+      WiFi.config(_staticIP, _gateway, _subnet);
+    } 
+
     // Try connecting to STA
     WiFi.persistent(false);
     WiFi.setAutoConnect(false);

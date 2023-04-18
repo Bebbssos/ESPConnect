@@ -47,6 +47,11 @@ class ESPConnectClass {
     String _sta_ssid = "";
     String _sta_password = "";
 
+    IPAddress _staticIP;
+    IPAddress _gateway;
+    IPAddress _subnet;
+    bool _useStaticIP = false; // Flag to indicate whether to use static IP or not
+
   private:
     void load_sta_credentials();
 
@@ -73,6 +78,14 @@ class ESPConnectClass {
 
     // Return true / false depending of connection status
     bool isConnected();
+
+      // Method to set static IP, gateway, and subnet
+  void setStaticIP(IPAddress ip, IPAddress gateway, IPAddress subnet){
+    _staticIP = ip;
+    _gateway = gateway;
+    _subnet = subnet;
+    _useStaticIP = true;
+  }
 
     // Gets SSID of connected endpoint
     String getSSID();
