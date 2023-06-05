@@ -216,7 +216,11 @@ bool ESPConnectClass::begin(AsyncWebServer* server, unsigned long timeout){
 
     // Configure static IP or use DHCP based on _useStaticIP flag
     if (_useStaticIP) {
-      WiFi.config(_staticIP, _gateway, _subnet);
+      if (_useStaticIPDNS) {
+        WiFi.config(_staticIP, _gateway, _subnet, _dns1, _dns2);
+      } else {
+        WiFi.config(_staticIP, _gateway, _subnet);
+      }
     } 
 
     // Try connecting to STA
