@@ -87,7 +87,7 @@ public:
     _gateway = gateway;
     _subnet = subnet;
     _useStaticIP = true;
-    _useStaticIPDNS = true;
+    _useStaticIPDNS = false;
   }
 
   // Method to set static IP, gateway, and subnet
